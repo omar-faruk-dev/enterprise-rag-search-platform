@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: rag
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: rag
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/rag
+      SPRING_DATASOURCE_USERNAME: rag
+      SPRING_DATASOURCE_PASSWORD: rag
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-dummy}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+volumes:
+  pgdata:
