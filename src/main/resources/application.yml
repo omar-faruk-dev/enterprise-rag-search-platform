@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: enterprise-rag-search-platform
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rag
+    username: rag
+    password: rag
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:dummy}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+server:
+  error:
+    include-message: always
